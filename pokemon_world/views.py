@@ -28,3 +28,16 @@ class RegionView(TemplateView):
             
         query = models.Region.objects.filter(code=code, name=name)
         return render(request, 'region.html',{'data':query})
+    
+class DuelView(TemplateView):
+    template_name = 'duel.html'
+    def get(self,request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+    def post(self,request):
+        id = request.POST['duel_id']
+        settlemen_name = request.POST['settlemen_name']
+        winner = request.POST['winner']
+        losser = request.POST['losser']
+        
+        query = models.Duel.objects.filter(id=id, settlemen=settlemen_name, trainer_win=winner, trainer_loss=losser)
+        return render(request, 'duel.html',{'data':query})
