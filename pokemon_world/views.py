@@ -41,3 +41,13 @@ class DuelView(TemplateView):
         
         query = models.Duel.objects.filter(id=id, settlemen=settlemen_name, trainer_win=winner, trainer_loss=losser)
         return render(request, 'duel.html',{'data':query})
+    
+class SpecieView(TemplateView):
+    template_name = 'specie.html'
+    def get(self,request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+    def post(self,request):
+        name = request.POST['name']
+        
+        query = models.Specie.objects.filter(name=name)
+        return render(request, 'specie.html',{'data':query})
