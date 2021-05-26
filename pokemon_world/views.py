@@ -70,3 +70,12 @@ class MovementView(TemplateView):
         element = request.POST['element_name']
         query = models.Movement.objects.filter(name=name, element__name=element)
         return render(request, 'movement.html',{'data':query})
+class ElementView(TemplateView):
+    template_name = 'element.html'
+    def get(self,request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+    def post(self,request):
+        name = request.POST['name']
+        
+        query = models.Element.objects.filter(name=name)
+        return render(request, 'element.html',{'data':query})

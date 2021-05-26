@@ -9,7 +9,9 @@ urlpatterns = [
     path('duel/', views.DuelView.as_view(), name='duel'),
     path('specie/', views.SpecieView.as_view(), name='specie'),
     path('settlemen/', views.SettlemenView.as_view(), name='settlemen'),
-    path('movement/', views.SettlemenView.as_view(), name='movement')
+    path('movement/', views.SettlemenView.as_view(), name='movement'),
+    path('element/', views.SettlemenView.as_view(), name='element')
+    
     
     
 ]
