@@ -79,3 +79,15 @@ class ElementView(TemplateView):
         
         query = models.Element.objects.filter(name=name)
         return render(request, 'element.html',{'data':query})
+
+class GymView(TemplateView):
+    template_name = 'gym.html'
+    def get(self,request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+    def post(self,request):
+        id = request.POST['id']
+        element = request.POST['element']
+        city = request.POST['city']
+        
+        query = models.Gym.objects.filter(id=id, element__name=element, city__id=city)
+        return render(request, 'gym.html',{'data':query})
