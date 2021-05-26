@@ -1,0 +1,173 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'css/tailwind.min.css'%}" >
+    <title>Mundo Pokemon</title>
+    <style>
+			.carousel-open:checked + .carousel-item {
+				position: static;
+				opacity: 100;
+			}
+			.carousel-item {
+				-webkit-transition: opacity 0.6s ease-out;
+				transition: opacity 0.6s ease-out;
+			}
+			#carousel-1:checked ~ .control-1,
+			#carousel-2:checked ~ .control-2,
+			#carousel-3:checked ~ .control-3 {
+				display: block;
+			}
+			.carousel-indicators {
+				list-style: none;
+				margin: 0;
+				padding: 0;
+				position: absolute;
+				bottom: 2%;
+				left: 0;
+				right: 0;
+				text-align: center;
+				z-index: 10;
+			}
+			#carousel-1:checked ~ .control-1 ~ .carousel-indicators li:nth-child(1) .carousel-bullet,
+			#carousel-2:checked ~ .control-2 ~ .carousel-indicators li:nth-child(2) .carousel-bullet,
+			#carousel-3:checked ~ .control-3 ~ .carousel-indicators li:nth-child(3) .carousel-bullet {
+				color: #2b6cb0;  /*Set to match the Tailwind colour you want the active one to be */
+			}
+
+      .oscurecer-img{
+        filter: brightness(50%); 
+      }   
+      .aclarar-img{
+        filter: brightness(150%);
+      }
+		</style>
+   </head>
+   <body class=" ">
+    
+     <!--Header-->
+     <div class="w-full bg-green-400 p-6 select-none" >
+        <div class="inline-block cursor-pointer text-white text-xl" ><a href="{% url 'base' %}">Mundo Pokemon</a></div>
+        <div class="inline-block absolute right-8">
+          <div  class="inline-block text-white text-sm pr-6 border-none transform hover:scale-110">Iniciar Sesion</div>
+          <div class="inline-block text-white text-sm border-none transform hover:scale-110">Registrarse</div>
+        </div>
+     </div>
+     <!--End Header-->
+
+     <!--Navigator-->
+     <div class="w-full cursor-pointer bg-green-500 h-auto py-2 select-none shadow-2xl  transition duration-500 ease-in-out hover:bg-gray-500 transform hover:scale-110 " >
+      <div class="flex flex-wrap justify-center text-white text-center ">
+        <div class="mx-4 rounded-lg transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a>Perfil de Entrenadores</a></div>
+        <div class="mx-4 rounded-lg transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a href= "{% url 'trainers' %}">Entrenadores</a></div>
+        <div class="mx-4 rounded-lg transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a>Regiones</a></div>
+        <div class="mx-4 rounded-lg transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a>Duelos</a></div>
+        <div class="mx-4 rounded-lg transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a>Especies</a></div>
+        <div class="mx-4 rounded-lg transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a>Asentamientos</a></div>
+        <div class="mx-4 rounded-lg transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a>Movimientos</a></div>
+        <div class="mx-4 rounded-lg transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a>Elementos</a></div>
+        <div class="mx-4 rounded-lg transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a>Gimnasios</a></div>
+      </div>
+     </div>
+     <!--End Navigator-->
+     
+     <!--Section-->
+
+     {%block section%}
+      <div class="responsive ">
+        
+     
+        <div class="carousel relative w-full shadow-2xl bg-white">
+         <div class="carousel-inner relative overflow-hidden w-full h-screen sm:h-full">
+           <!--Slide 1-->
+           <input class="carousel-open" type="radio" id="carousel-1" name="carousel" aria-hidden="true" hidden="" checked="checked">
+           <div class="carousel-item absolute opacity-0">
+             <div class="relative">
+               <div class="z-10 absolute  bg-transparent  mt-40 mx-20 md:mt-60 md:mx-40  text-white">
+                 <div class="rounded-lg  bg-green-400 w-40  cursor-pointer transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a>Leer mas ...</a></div>
+                 <p>
+                   Un elemento fundamental de los videojuegos Pokémon del género RPG es conocer el concepto de los combates,
+                   que se disputan entre dos equipos, cada uno por lo menos con un Pokémon. Puede o no haber restricciones en
+                   el tamaño o características de estos equipos. El objetivo es debilitar a todos los miembros del otro equipo rival.
+                   Para obtener la victoria, hay que planear una estrategia; tales como: el uso de objetos curativos o de batalla, bayas
+                   y movimientos, con base a este último, es el punto que se debe de practicar más, puesto que, en combates especiales
+                   (como: Metro Batalla o Frente Batalla, y combates con otros jugadores) el uso de objetos es limitado (prohibido), 
+                   aquí es donde entra la estrategia, donde, deberás usar movimientos que favorezcan la balanza a tu lugar, ahora. 
+                 </p>
+               </div>
+               <div class="z-0">
+                 <img class="oscurecer-img  w-full h-full"  src="{% static 'images/duel.jpg'%}">
+               </div>
+             </div>
+           </div>
+           <label for="carousel-3" class="prev control-1 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer hidden bg-green-400 text-3xl font-bold text-black hover:text-white rounded-full hover:bg-gray-700 leading-tight text-center z-10 inset-y-0 left-0 my-auto">‹</label>
+           <label for="carousel-2" class="next control-1 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer hidden bg-green-400 text-3xl font-bold text-black hover:text-white rounded-full hover:bg-gray-700 leading-tight text-center z-10 inset-y-0 right-0 my-auto">›</label>
+
+           <!--Slide 2-->
+           <input class="carousel-open" type="radio" id="carousel-2" name="carousel" aria-hidden="true" hidden="">
+           <div class="carousel-item absolute opacity-0">
+             <div class="relative">
+               <div class="z-10 absolute  bg-transparent  mt-40 mx-20 md:mt-60 md:mx-40 text-white">
+                 <div class="rounded-lg bg-green-400 w-40  cursor-pointer transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a>Leer mas ...</a></div>
+
+                 <p>
+                   Los entrenadores Pokémon (Pokémon Trainer en inglés) son personas que se encargan de capturar, criar, entrenar y
+                   cuidar de dichas criaturas. Sin embargo, cualquier persona que posea un Pokémon puede considerarse entrenador,
+                   por lo tanto, un coordinador Pokémon es también lo primero. El nombre del entrenador original de cada Pokémon siempre
+                   se mantiene, aunque este se intercambie, y puede consultarse en su menú de datos, estando representado por las siglas
+                   EO (Entrenador Original).  
+                 </p>
+               </div>
+               <div class="z-0 h-auto">
+                 <img class="oscurecer-img object-cover w-full h-full" src="{% static 'images/trainer.jpg'%}">
+               </div>
+             </div>
+           </div>
+           <label for="carousel-1" class="prev control-2 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer hidden bg-green-400 text-3xl font-bold text-black hover:text-white rounded-full hover:bg-gray-700 leading-tight text-center z-10 inset-y-0 left-0 my-auto">‹</label>
+           <label for="carousel-3" class="next control-2 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer hidden bg-green-400 text-3xl font-bold text-black hover:text-white rounded-full hover:bg-gray-700 leading-tight text-center z-10 inset-y-0 right-0 my-auto">›</label> 
+
+           <!--Slide 3-->
+           <input class="carousel-open" type="radio" id="carousel-3" name="carousel" aria-hidden="true" hidden="">
+           <div class="carousel-item absolute opacity-0" >
+             <div class="relative">
+               <div class="z-10 absolute  bg-transparent  mt-40 mx-20 md:mt-60 md:mx-40 text-white">
+                 <div class="rounded-lg bg-green-400 w-40  cursor-pointer transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a>Leer mas ...</a></div>
+
+                 <p>
+                   Los tipos elementales (Types en inglés, タイプ en japonés) son atributos asociados a los Pokémon y a los movimientos
+                   desarrollados por estos, que permiten su clasificación y crean relaciones entre ellos basadas en las ventajas y debilidades
+                   de los tipos.Algunos Pokémon pueden pertenecer a dos tipos a la vez, mientras que los movimientos solo a uno. Por otra parte,
+                   existen ciertos factores que hacen que algunos Pokémon cambien de tipo. La mayoría de los tipos elementales fueron introducidos
+                   en la primera generación. Los tipos acero y siniestro fueron añadidos en la segunda generación, así como el tipo ??? al cual no 
+                   pertenece ningún Pokémon, solo huevos Pokémon, el movimiento maldición (hasta la cuarta generación), y en Mundo Misterioso, 
+                   los movimientos sablazo y cortaviento. El tipo hada se añadió en la sexta generación.   
+                 </p>
+               </div>
+               <div class="z-0 h-auto">
+                 <img class="oscurecer-img object-cover w-full h-full" src="{% static 'images/pokemons.jpg'%}">
+               </div>
+             </div>
+           </div>
+           <label for="carousel-2" class="prev control-3 w-10 h-10 ml-2 md:ml-10 absolute cursor-pointer hidden bg-green-400 text-3xl font-bold text-black hover:text-white rounded-full hover:bg-gray-700 leading-tight text-center z-10 inset-y-0 left-0 my-auto">‹</label>
+           <label for="carousel-1" class="next control-3 w-10 h-10 mr-2 md:mr-10 absolute cursor-pointer hidden bg-green-400 text-3xl font-bold text-black hover:text-white rounded-full hover:bg-gray-700 leading-tight text-center z-10 inset-y-0 right-0 my-auto">›</label>
+          
+           <!-- Add additional indicators for each slide-->
+           <ol class="carousel-indicators">
+             <li class="inline-block mr-3">
+               <label for="carousel-1" class="carousel-bullet cursor-pointer block text-4xl text-white hover:text-blue-700">•</label>
+             </li>
+             <li class="inline-block mr-3">
+               <label for="carousel-2" class="carousel-bullet cursor-pointer block text-4xl text-white hover:text-blue-700">•</label>
+             </li>
+             <li class="inline-block mr-3">
+               <label for="carousel-3" class="carousel-bullet cursor-pointer block text-4xl text-white hover:text-blue-700">•</label>
+             </li>
+           </ol>
+         </div>
+       </div>
+    </div>
+    {%endblock%}
+   </body>
+</html>

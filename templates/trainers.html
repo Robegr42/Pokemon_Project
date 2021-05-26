@@ -1,0 +1,26 @@
+{%extends 'base.html'%}
+{%block section%}
+<div class="">
+    <div class="w-full h-auto py-20 bg-cover" style="background-image: url('../../static/images/trainers_section.jpg')">
+        <form name="trainers_query" method="post">{% csrf_token %}
+            <div class="justify-center shadow-2xl h-auto p-6 opacity-75 gap-10 sm:flex-col-1 md:flex-row mx-40 bg-gray-500 ">
+                <label class="block text-green-300 bg-gradient-to-r py-2 font-bold mb-2"> Consultas</label>
+                <div>
+                    <input class="" type="text" name="triner_name"  placeholder="Nombre">
+                    <select class="" name="trainer_sex">
+                        <option>Masculino</option>
+                        <option>Femenino</option>
+                    </select>
+                    <input class="" type="number" name="triner_age"  placeholder="Edad">
+                    <input class="" type="text" name="triner_region_code" placeholder="Codigo de Region">
+                    <button class="bg-green-500  w-20">Buscar</button>
+                </div>
+            </div>
+        </form>
+        <div class="h-64" >
+            
+        </div>
+    </div>
+    
+</div>
+{%endblock%}
