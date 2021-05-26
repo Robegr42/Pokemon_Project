@@ -61,3 +61,12 @@ class SettlemenView(TemplateView):
         region = request.POST['region']
         query = models.Settlemen.objects.filter(id=id, region__code=region)
         return render(request, 'settlemen.html',{'data':query})
+class MovementView(TemplateView):
+    template_name = 'movement.html'
+    def get(self,request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+    def post(self,request):
+        name = request.POST['name']
+        element = request.POST['element_name']
+        query = models.Movement.objects.filter(name=name, element__name=element)
+        return render(request, 'movement.html',{'data':query})
