@@ -51,3 +51,13 @@ class SpecieView(TemplateView):
         
         query = models.Specie.objects.filter(name=name)
         return render(request, 'specie.html',{'data':query})
+    
+class SettlemenView(TemplateView):
+    template_name = 'settlemen.html'
+    def get(self,request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+    def post(self,request):
+        id = request.POST['id']
+        region = request.POST['region']
+        query = models.Settlemen.objects.filter(id=id, region__code=region)
+        return render(request, 'settlemen.html',{'data':query})

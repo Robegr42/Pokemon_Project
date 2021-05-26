@@ -79,7 +79,7 @@ class Teach(models.Model):
     movement = models.ForeignKey(Movement, on_delete=models.CASCADE)
     
 class Settlemen(models.Model):
-    id = models.CharField(max_length=200, primary_key=True)
+    id = models.CharField(max_length=200, primary_key=True, default='')
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
 
 class Town(models.Model):
