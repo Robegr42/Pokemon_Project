@@ -1,0 +1,33 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block section%}
+<div class="">
+  <div class="w-full h-auto py-20 bg-cover" style="background-image: url({% static 'images/trainers_section.jpg'%})">
+    <div>  
+      <div class="">
+        <form name="trainers_query" method="post">{% csrf_token %}
+          <div class="justify-center rounded border-solid border-4 border-gray-600 shadow-2xl h-auto p-6 opacity-75 gap-10 sm:flex-col-1 md:flex-row mx-40 bg-gray-500 ">
+              <label class="block text-green-300 bg-gradient-to-r py-2 font-bold mb-2"> Consultas</label>
+              <div>
+                  <input class="" type="text" name="id" placeholder="ID">
+                  <input class="" type="text" name="region" placeholder="Codigo de Region">
+                  
+                  <button class="bg-green-500  w-20">Buscar</button>
+              </div>
+          </div>
+        </form>
+      </div>
+      <div class="h-64 overflow-hidden mt-10 mx-40 rounded-md" >
+        <div class="justify-center border-2 border-solid bg-white border-gray-600 min-h-8 h-full">
+          {%if data|length == 0 %}
+              
+          {% else %}
+              {{data}}
+          {%endif%}
+        </div>
+      </div>
+    </div>  
+  </div>
+    
+</div>
+{%endblock%}
