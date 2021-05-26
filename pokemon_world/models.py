@@ -20,7 +20,7 @@ class Citizen(models.Model):
     id = models.CharField(max_length=200, primary_key=True)
     name = models.CharField(max_length=200)
     sex = models.CharField(max_length=1)
-    Age = models.IntegerField(default=1)
+    age = models.IntegerField(default=1)
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
     #l_code = models.ForeignKey(Region, on_delete=models.CASCADE)
        
@@ -35,7 +35,7 @@ class Gym(models.Model):
 
 class Trainer(models.Model):
     id = models.CharField(max_length=200, primary_key=True)
-    trainer = models.ForeignKey(Citizen, on_delete=models.CASCADE)
+    citizen = models.ForeignKey(Citizen, on_delete=models.CASCADE)
     gym = models.ForeignKey(Gym, on_delete=models.CASCADE)
     
 class Pokemon(models.Model):
@@ -79,7 +79,7 @@ class Teach(models.Model):
     movement = models.ForeignKey(Movement, on_delete=models.CASCADE)
     
 class Settlemen(models.Model):
-    id = models.CharField(max_length=200, primary_key=True)
+    id = models.CharField(max_length=200, primary_key=True, default='')
     region = models.ForeignKey(Region, on_delete=models.CASCADE)
 
 class Town(models.Model):
