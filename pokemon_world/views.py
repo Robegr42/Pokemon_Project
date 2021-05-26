@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
-
+from . import models
 
 def base(request):
     return render(request, 'base.html')
@@ -14,6 +14,17 @@ class TrainersView(TemplateView):
         name = request.POST['trainer_name']
         sex = request.POST['trainer_sex']
         age = request.POST['trainer_age']
-        region = request.POST['trainer_region_code']        
-        
-        return render(request, 'trainers.html')
+        gym = request.POST['trainer_gym']        
+        query = models.Trainer.objects.filter(citizen__name=name, citizen__sex=sex, citizen__age= int(age), gym__id=gym)
+        return render(request, 'trainers.html',{'data':query})
+
+class RegionView(TemplateView):
+    template_name = 'region.html'
+    def get(self,request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+    def post(self,request):
+        code = request.POST['region_code']
+        name = request.POST['region_name']
+            
+        query = models.Region.objects.filter(code=code, name=name)
+        return render(request, 'region.html',{'data':query})
