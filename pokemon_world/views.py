@@ -76,10 +76,11 @@ class ElementView(TemplateView):
         return super().get(request, *args, **kwargs)
     def post(self,request):
         name = request.POST['name']
-        if name == '':
-            query = models.Element.objects.all()
-        else:
+        if  'element_search' in request.POST:
             query = models.Element.objects.filter(name__startswith=name)
+        elif  'effective_against' in request.POST:
+            pass
+            
         
         return render(request, 'element.html',{'data': query})
 

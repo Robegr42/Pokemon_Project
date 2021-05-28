@@ -25,9 +25,9 @@ class Citizen(models.Model):
     #l_code = models.ForeignKey(Region, on_delete=models.CASCADE)
        
 class City(models.Model): 
-       name = models.CharField(max_length=200)
-       id = models.CharField(max_length=200, primary_key=True)
-       region = models.ForeignKey(Region, on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    id = models.CharField(max_length=200, primary_key=True)
+    region = models.ForeignKey(Region, on_delete=models.CASCADE)
 class Gym(models.Model):
     id =  models.CharField(max_length=200, primary_key=True)
     element = models.ForeignKey(Element, on_delete=models.CASCADE)
@@ -58,7 +58,7 @@ class Leads(models.Model):
 class Got_Medals(models.Model):
     citizen = models.ForeignKey(Citizen, on_delete=models.CASCADE)
     trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE)
-    Gym = models.ForeignKey(Gym, on_delete=models.CASCADE)
+    gym = models.ForeignKey(Gym, on_delete=models.CASCADE)
     
 class Specie(models.Model):
     name = models.CharField(max_length=200, primary_key=True)
