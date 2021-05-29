@@ -70,7 +70,7 @@ class Duel(models.Model):
     trainer_win = models.ForeignKey('Trainer', on_delete=models.CASCADE, related_name='trainer_win')
     trainer_loss = models.ForeignKey('Trainer', on_delete=models.CASCADE, related_name='trainer_loss')
     date = models.DateTimeField(auto_now=False, auto_now_add=False)
-    participants = models.ManyToManyField('Pokemon')
+    participants = models.ManyToManyField('Captured_Pokemon')
 
 class Captured_Pokemon(models.Model):
     trainer = models.ForeignKey(Trainer, on_delete=models.CASCADE, related_name='captor')

@@ -39,7 +39,7 @@ class DuelView(TemplateView):
         winner = request.POST['winner']
         losser = request.POST['losser']
         
-        query = models.Duel.objects.filter(id=id, settlemen=settlemen_name, trainer_win=winner, trainer_loss=losser)
+        query = models.Duel.objects.filter(id__startswith=id, settlemen__startswith=settlemen_name, trainer_win__startswith=winner, trainer_loss__startswith=losser)
         return render(request, 'duel.html',{'data':query})
     
 class SpecieView(TemplateView):
@@ -49,7 +49,7 @@ class SpecieView(TemplateView):
     def post(self,request):
         name = request.POST['name']
         
-        query = models.Specie.objects.filter(name=name)
+        query = models.Specie.objects.filter(name__startswith=name)
         return render(request, 'specie.html',{'data':query})
     
 class SettlemenView(TemplateView):
@@ -59,7 +59,7 @@ class SettlemenView(TemplateView):
     def post(self,request):
         id = request.POST['id']
         region = request.POST['region']
-        query = models.Settlemen.objects.filter(id=id, region__code=region)
+        query = models.Settlemen.objects.filter(id__startswith=id, region__code=region)
         return render(request, 'settlemen.html',{'data':query})
 class MovementView(TemplateView):
     template_name = 'movement.html'
@@ -68,7 +68,7 @@ class MovementView(TemplateView):
     def post(self,request):
         name = request.POST['name']
         element = request.POST['element_name']
-        query = models.Movement.objects.filter(name=name, element__name=element)
+        query = models.Movement.objects.filter(name__startswith=name, element__name__startswith=element)
         return render(request, 'movement.html',{'data':query})
 class ElementView(TemplateView):
     template_name = 'element.html'
@@ -76,10 +76,11 @@ class ElementView(TemplateView):
         return super().get(request, *args, **kwargs)
     def post(self,request):
         name = request.POST['name']
-        if  'element_search' in request.POST:
-            query = models.Element.objects.filter(name__startswith=name)
-        elif  'effective_against' in request.POST:
-            pass
+        if  'elements_search' in request.POST:
+            if name == '':
+                query = models.Element.objects.all()
+            else:
+                query = models.Element.objects.filter(name__startswith=name)
             
         
         return render(request, 'element.html',{'data': query})
