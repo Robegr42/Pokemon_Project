@@ -33,8 +33,8 @@ class Gym(models.Model):
 
 class Trainer(models.Model):
     id = models.CharField(max_length=200, primary_key=True)
-    citizen = models.ForeignKey('Citizen', on_delete=models.CASCADE, related_name='citizen')
-    medals = models.ManyToManyField(Gym)
+    citizen = models.OneToOneField('Citizen', on_delete=models.CASCADE, related_name='citizen')
+    medals = models.ManyToManyField(Gym, blank=True)
     gym_member = models.ForeignKey('Gym', on_delete=models.SET_NULL, related_name='gym_member', null=True, blank=True)
     
 class Pokemon(models.Model):

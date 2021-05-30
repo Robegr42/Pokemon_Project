@@ -10,7 +10,7 @@
               <label class="block text-green-300 bg-gradient-to-r py-2 font-bold mb-2"> Consultas</label>
               <div>
                   <input class="" type="text" name="duel_id" placeholder="ID">
-                  <input class="" type="text" name="settlemen_name"  placeholder="Asentamiento">
+                  <input class="" type="text" name="settlemen_id"  placeholder="Asentamiento">
                   <input class="" type="text" name="winner" placeholder="Ganador">
                   <input class="" type="text" name="losser"  placeholder="Perdedor">
                   <button class="bg-green-500  w-20">Buscar</button>
@@ -25,9 +25,9 @@
             {%for item in data %}
               <div class="  bg-gray-500 shadow-2xl text-center mx-10 rounded-2xl">
                 <a>ID: {{item.id}}</a>
-                <a>Settlemen: {{item.settlemen}}</a>
-                <a>Winner{{item.trainer_win__citizen__name}}</a>
-                <a>Losser{{item.trainer_loss__citizen__name}}</a> 
+                <a>Settlemen: {{item.settlemen.pk}}</a>
+                <a>Winner ID: {{item.trainer_win.pk}}</a>
+                <a>Losser ID: {{item.trainer_loss.pk}}</a> 
               </div>
           {%endfor%}
           </div>

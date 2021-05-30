@@ -5,32 +5,118 @@
   <div class="w-full h-auto py-20 bg-cover" style="background-image: url({% static 'images/trainers_section.jpg'%})">
     <div>  
       <div class="">
-        <form name="trainers_query" method="post">{% csrf_token %}
+        <form name="region_search" method="post">{% csrf_token %}
           <div class="justify-center rounded border-solid border-4 border-gray-600 shadow-2xl h-auto p-6 opacity-75 gap-10 sm:flex-col-1 md:flex-row mx-40 bg-gray-500 ">
-              <label class="block text-green-300 bg-gradient-to-r py-2 font-bold mb-2"> Consultas</label>
+              <label class="block text-green-300 bg-gradient-to-r py-2 font-bold mb-2"> Buscar Regiones</label>
               <div>
                   <input class="" type="text" name="region_code" placeholder="Codigo">
                   <input class="" type="text" name="region_name"  placeholder="Nombre">
-                  <button class="bg-green-500  w-20">Buscar</button>
+                  <button class="bg-green-500  w-20" name = "region_search">Buscar</button>
               </div>
           </div>
         </form>
       </div>
       <div class="h-64 overflow-hidden mt-10 mx-40 rounded-md" >
-        <div class="justify-center text-white border-solid border-4 border-gray-600 opacity-75  overflow-auto bg-gray-900   h-full">
+        <div class="justify-center text-white border-solid border-4 border-gray-600   overflow-auto bg-gray-900   h-full">
           <div class="text-4xl text-center  bg-gray-700 shadow-2xl  w-full top-0 sticky">Resultados</div>
           <div class="flex flex-col mt-2 gap-2">
-            {%for item in data %}
-              <div class="  bg-gray-500 shadow-2xl text-center mx-10 rounded-2xl">
-                ID:{{item.ID}} Code:{{item.code}}
-              </div>
-          {%endfor%}
+              <script> all_modals=[] </script>
+              {%for item in data %}
+                <div class="  inline-block bg-gray-500 shadow-2xl text-center mx-10 rounded-2xl" >
+                  ID: {{item.region.code}} Nombre: {{item.region.name}}
+                  <script> all_modals.push('{{item.region.name}}-modal') </script>
+                  
+                  <div class="inline-block">
+                    <button onclick="openModal('{{item.region.name}}-modal')" class=' text-white p-2 rounded font-bold'>Detalles</button>
+                  </div>
+                   
+                  
+                  <div class="{{item.region.name}}-modal fixed w-full inset-0 z-50 overflow-hidden flex justify-center items-center animated fadeIn faster" style="background: rgba(0,0,0,.7);">
+                    <div class="border border-black shadow-lg modal-container bg-gray-200  w-4/12 md:max-w-11/12 mx-auto rounded-xl shadow-lg z-50 overflow-y-auto">
+                      <div class="modal-content py-4 text-left px-6">
+                        <!--Title-->
+                        <div class="flex justify-between items-center pb-3">
+                          <p class="text-2xl font-bold text-black">{{item.region.name}}</p>
+                          <div class="modal-close cursor-pointer z-50" onclick="modalClose('{{item.region.name}}-modal')">
+                            <svg class="fill-current text-gray-500" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                              viewBox="0 0 18 18">
+                              <path
+                                d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z">
+                              </path>
+                            </svg>
+                          </div>
+                        </div>
+                        <!--Body-->
+                        <div class="my-5 mr-5 ml-5 flex justify-center text-black">
+                           <div>
+                             <div class="h-auto max-h-40 ">
+                                <div>
+                                  <a>Entrenadores con mas de 3 duelos ganados:</a>
+                                  {% for x in item.duels%}
+                                    <div class="mx-4">
+                                        ID: {{x.id}} Nombre: {{x.citizen.name}}
+                                    </div>
+                                  {%endfor%}
+                                  {% if item.duels|length == 0%}
+                                   0
+                                  {%endif%}
+                                 </div>
+                                <div>
+                                  <a>Entrenadores que pueden competir en la Liga Pokemon:</a>
+                                  {% for x in item.medals%}
+                                    <div class="mx-4">
+                                        ID: {{x.id}} Nombre: {{x.citizen.name}}
+                                    </div>
+                                  {%endfor%}
+                                  {% if item.medals|length == 0%}
+                                     0
+                                  {%endif%}
+                                </div>
+                                
+                             </div>
+                             <div calss="mt-8">La cantida de entrenadores representa el {{item.percent}}% de la poblacion</div>
+                             
+                           </div>
+                        </div>
+                        <!--Footer-->
+                        <div class="flex justify-end pt-2 space-x-14">
+                          <button class="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold" onclick="modalClose('{{item.region.name}}-modal')">OK</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+              {%endfor%}
           </div>
           
         </div>
       </div>
-    </div>  
-  </div>
+    </div> 
     
 </div>
+<script>
+  all_modals.forEach((modal)=>{
+      const modalSelected = document.querySelector('.'+modal);
+      modalSelected.classList.remove('fadeIn');
+      modalSelected.classList.add('fadeOut');
+      modalSelected.style.display = 'none';
+  })
+  const modalClose = (modal) => {
+      const modalToClose = document.querySelector('.'+modal);
+      modalToClose.classList.remove('fadeIn');
+      modalToClose.classList.add('fadeOut');
+      setTimeout(() => {
+          modalToClose.style.display = 'none';
+      }, 500);
+  }
+
+  const openModal = (modal) => {
+      const modalToOpen = document.querySelector('.'+modal);
+      modalToOpen.classList.remove('fadeOut');
+      modalToOpen.classList.add('fadeIn');
+      modalToOpen.style.display = 'flex';
+  }
+
+</script>
 {%endblock%}
