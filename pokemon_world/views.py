@@ -13,10 +13,19 @@ class TrainersView(TemplateView):
     def get(self,request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
     def post(self,request):
-        id = request.POST['trainer_id']
-        name = request.POST['trainer_name']
-        query = models.Trainer.objects.filter(id__startswith=id, citizen__name__startswith=name)
-        return render(request, 'trainers.html',{'data':query})
+        if 'trainers_query' in request.POST:
+            button = 'trainers_query' 
+            id = request.POST['trainer_id']
+            name = request.POST['trainer_name']
+            query = models.Trainer.objects.filter(id__startswith=id, citizen__name__startswith=name)
+        elif 'specie_search' in request.POST:
+            button = 'specie_search'
+            id = request.POST['specie_trainer_id']
+            specie = request.POST['specie']
+            query = models.Captured_Pokemon.objects.filter(trainer__id=id, pokemon__specie__name=specie)
+            
+            
+        return render(request, 'trainers.html',{'data':query, 'button': button})
 
 class RegionView(TemplateView):
     template_name = 'region.html'
@@ -112,6 +121,5 @@ class GymView(TemplateView):
         id = request.POST['id']
         element = request.POST['element']
         city = request.POST['city']
-
-        query = models.Gym.objects.filter(id=id, element__name=element, city__id=city)
+        query = models.Gym.objects.filter(id__startswith=id, element__name__startswith=element, city__id__startswith=city)
         return render(request, 'gym.html',{'data':query})
