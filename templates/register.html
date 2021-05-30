@@ -1,0 +1,24 @@
+{%load static%}
+<!-- templates/registration/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'css/tailwind.min.css'%}" >
+    <title>Register</title>
+  </head>
+  <div class="h-screen bg-white flex flex-col space-y-10 justify-center items-center">
+    <div class="bg-white w-96 shadow-xl rounded p-5">
+      <h1 class="text-3xl font-medium">Welcome</h1>
+      
+      <form class="space-y-5 mt-5 p-10" method="POST">{%csrf_token%} 
+        <div class="">
+          {{form}}
+        </div>
+      <button class="text-center w-full bg-blue-900 rounded-md text-white py-3 font-medium" type="submit">Register</button>
+
+      </form>
+    </div>
+  </div>  
+</html>

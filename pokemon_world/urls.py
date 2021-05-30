@@ -1,9 +1,10 @@
 from django.urls import path
 from . import views
-
+from django.conf.urls import include, url
 
 urlpatterns = [
     path('base/', views.base, name='base'),
+    path('register/', views.register, name='register'),
     path('trainers/', views.TrainersView.as_view(), name='trainers'),
     path('region/', views.RegionView.as_view(), name='region'),
     path('duel/', views.DuelView.as_view(), name='duel'),

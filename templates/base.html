@@ -90,10 +90,15 @@
     
      <!--Header-->
      <div class="w-full bg-green-400 p-6 select-none" >
-        <div class="inline-block cursor-pointer text-white text-xl" ><a href="{% url 'base' %}">Mundo Pokemon</a></div>
+        <div class="inline-block cursor-pointer text-white text-4xl" ><a href="{% url 'base' %}">Mundo Pokemon</a></div>
         <div class="inline-block absolute right-8">
-          <div  class="inline-block text-white text-sm pr-6 border-none transform hover:scale-110">Iniciar Sesion</div>
-          <div class="inline-block text-white text-sm border-none transform hover:scale-110">Registrarse</div>
+          {%if user.is_authenticated%}
+            <div class="text-2xl text-white">Welcome: {{user.username}}</div>
+            <a  class="inline-block text-white text-sm pr-6 border-none transform hover:scale-110" href="{% url 'logout' %}">Cerrar Sesion</a>
+
+          {%else%}
+          <a  class="inline-block text-white text-sm pr-6 border-none transform hover:scale-110" href="{% url 'login' %}">Iniciar Sesion</a>
+          {%endif%}
         </div>
      </div>
      <!--End Header-->
@@ -101,7 +106,10 @@
      <!--Navigator-->
      <div class="w-full cursor-pointer bg-green-500 h-auto py-2 select-none shadow-2xl  transition duration-500 ease-in-out hover:bg-gray-500 transform hover:scale-110 " >
       <div class="flex flex-wrap justify-center text-white text-center ">
+        {%if user.is_authenticated%}
         <div class="mx-4 rounded-lg transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a>Perfil de Entrenadores</a></div>
+        {%endif%}
+
         <div class="mx-4 rounded-lg transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a href= "{% url 'trainers' %}">Entrenadores</a></div>
         <div class="mx-4 rounded-lg transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a href= "{% url 'region' %}">Regiones</a></div>
         <div class="mx-4 rounded-lg transition duration-300 ease-in-out transform px-2 hover:scale-125 hover:bg-gray-700"><a href= "{% url 'duel' %}">Duelos</a></div>
