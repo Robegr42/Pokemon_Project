@@ -43,8 +43,8 @@ class ProfileView(TemplateView):
         profile = models.Trainer.objects.filter(username=request.user.username)
         if profile.count() == 1:
             profile = profile[0]
-            data = {'profile' : profile}
-            profile.my_gym.pk
+            members = models.Trainer.objects.filter(gym=profile.my_gym)
+            data = {'profile' : profile, 'members' : members}
         else:
             profile = None
             data = {'form' : MyTrainerForm}
@@ -53,19 +53,22 @@ class ProfileView(TemplateView):
         if 'add' in request.POST:
             t = models.Trainer.objects.filter(id=request.POST['trainer_id'])
             boss = models.Trainer.objects.filter(username=request.user.username)[0]
+            profile = models.Trainer.objects.filter(username=request.user.username)[0]
             if t.count():
                 temp=t[0]
                 temp.gym = boss.my_gym
                 temp.save()
-            return render(request, 'trainerprofile.html')
-        citizen = MyTrainerForm(request.POST)
-        if citizen.is_valid():
-            born_region = models.Region.objects.filter(code=citizen.cleaned_data['born_region'])[0]
-            live_region = models.Region.objects.filter(code=citizen.cleaned_data['live_region'])[0]
-            temp = models.Citizen(id=citizen.cleaned_data['id'], name=citizen.cleaned_data['name'], sex=citizen.cleaned_data['sex'], age=citizen.cleaned_data['age'], live_region=live_region, born_region=born_region)
-            temp.save()
-            models.Trainer.objects.create(citizen=temp, username=request.user.username)
-        else: render(request, 'trainerprofile.html', {'form':MyTrainerForm})
+            members = models.Trainer.objects.filter(gym=profile.my_gym)
+            return render(request, 'trainerprofile.html', {'profile':profile, 'members':members})
+        else:
+            citizen = MyTrainerForm(request.POST)
+            if citizen.is_valid():
+                born_region = models.Region.objects.filter(code=citizen.cleaned_data['born_region'])[0]
+                live_region = models.Region.objects.filter(code=citizen.cleaned_data['live_region'])[0]
+                temp = models.Citizen(id=citizen.cleaned_data['id'], name=citizen.cleaned_data['name'], sex=citizen.cleaned_data['sex'], age=citizen.cleaned_data['age'], live_region=live_region, born_region=born_region)
+                temp.save()
+                models.Trainer.objects.create(citizen=temp, username=request.user.username)
+            else: render(request, 'trainerprofile.html', {'form':MyTrainerForm})
         return render(request, 'trainerprofile.html')
         
 class TrainersView(TemplateView):

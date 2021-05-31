@@ -38,9 +38,10 @@
           <div class="space-y-5 mt-5">
             <p>ID: {{profile.my_gym.id}}</p> 
             <p>Ciudad: {{profile.my_gym.city.id}}</p>
-            <div class="w-24 h-20">
-              {%for item in profile.my_gym.gym_member__set.all%}
-                {{item.id}}dfsf
+            <p>Miembros:</p>
+            <div class="w-44 h-20 overflow-x-auto">
+              {%for item in members%}
+                ID: {{item.id}} Nombre: {{item.citizen.name}}
               {%endfor%}
             </div>
           </div>
@@ -76,7 +77,7 @@
                 </div>
                 <!--Footer-->
                 <div class="flex justify-end pt-2 space-x-14">
-                  <button class="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold" onclick="modalClose('{{item.region.name}}-modal')">Cancel</button>
+                  <button class="px-4 bg-gray-200 p-3 rounded text-black hover:bg-gray-300 font-semibold" onclick="modalClose('add-modal')">Cancel</button>
                 </div>
               </div>
 
