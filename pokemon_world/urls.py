@@ -3,7 +3,7 @@ from . import views
 from django.conf.urls import include, url
 
 urlpatterns = [
-    path('base/', views.base, name='base'),
+    path('', views.base, name='base'),
     path('register/', views.register, name='register'),
     path('trainers/', views.TrainersView.as_view(), name='trainers'),
     path('region/', views.RegionView.as_view(), name='region'),
@@ -13,6 +13,8 @@ urlpatterns = [
     path('movement/', views.MovementView.as_view(), name='movement'),
     path('element/', views.ElementView.as_view(), name='element'),
     path('gym/', views.GymView.as_view(), name='gym'),
+    path('myprofile/', views.ProfileView.as_view(), name='myprofile'),
+    
     
     
     

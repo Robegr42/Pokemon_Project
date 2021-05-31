@@ -28,14 +28,14 @@ class Gym(models.Model):
     id =  models.CharField(max_length=200, primary_key=True)
     element = models.ForeignKey('Element', on_delete=models.CASCADE, related_name='gym_element')
     city = models.ForeignKey('City', on_delete=models.CASCADE, related_name='city')
-    boss = models.ForeignKey('Trainer', on_delete=models.CASCADE, related_name='boss')
+    boss = models.OneToOneField('Trainer', on_delete=models.CASCADE, related_name='my_gym')
     
 
 class Trainer(models.Model):
-    id = models.CharField(max_length=200, primary_key=True)
     citizen = models.OneToOneField('Citizen', on_delete=models.CASCADE, related_name='citizen')
     medals = models.ManyToManyField(Gym, blank=True)
-    gym_member = models.ForeignKey('Gym', on_delete=models.SET_NULL, related_name='gym_member', null=True, blank=True)
+    gym = models.ForeignKey('Gym', on_delete=models.SET_NULL, related_name='gym_member', null=True, blank=True)
+    username = models.CharField(max_length=200, blank=True)
     
 class Pokemon(models.Model):
     id = models.CharField(max_length=200, primary_key=True)

@@ -8,15 +8,16 @@
     <link rel="stylesheet" href="{% static 'css/tailwind.min.css'%}" >
     <title>Loggin</title>
   </head>
-  <div class="h-screen bg-white flex flex-col space-y-10 justify-center items-center">
-    <div class="bg-white w-96 shadow-xl rounded p-5">
+  <div class="h-screen  flex flex-col space-y-10 justify-center items-center bg-cover bg-no-repeat" style="background-image: url({% static 'images/login.jpg'%})">
+    <div class="bg-white  w-96 shadow-2xl rounded p-5">
       <h1 class="text-3xl font-medium">Welcome</h1>
       
       <form class="space-y-5 mt-5" method="POST">{%csrf_token%} {{form.as_p}}
 
         <button class="text-center w-full bg-blue-900 rounded-md text-white py-3 font-medium" type="submit">Login</button>
-        <a class="text-center w-full  rounded-md text-blue-900 py-3 font-medium" name="register" href="{% url 'register'%}">Register</a>
-
+        <p> Si ustede no posee una cuenta puede 
+        <a class=" w-full  text-blue-900 py-3 font-medium" name="register" href="{% url 'register'%}">Registrarse</a>
+        </p>
       </form>
     </div>
   </div>  

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-ri6a4i!65m-dc715jo$z5x+hvq^xdrn30rr6q(awsegm35dska
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '98ff5d808818.ngrok.io',
+    '1bc4bd993d8c.ngrok.io',
     '127.0.0.1'
 ]
 
@@ -60,7 +60,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / 'templates'],
-        'DIRS': [str(BASE_DIR.joinpath('templates'))],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

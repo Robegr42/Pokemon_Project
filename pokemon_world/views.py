@@ -3,9 +3,19 @@ from django.contrib.auth import login
 from django.urls import reverse
 from django.views.generic.base import TemplateView
 from . import models
-from django.db.models import Count 
-from django.db.models import Q
+from django.db.models import Count, Q
 from django.contrib.auth.forms import UserCreationForm
+from django import forms
+
+
+
+class MyTrainerForm(forms.Form):
+    id = forms.CharField(label='ID', max_length=200, required=True)
+    name = forms.CharField(label='Nombre', max_length=200, required=True)
+    sex = forms.CharField(label='Sexo', max_length=1, required=True)
+    age = forms.IntegerField(label='Edad', required=True)
+    born_region = forms.CharField(label='Region de Nacimiento', required=True)
+    live_region = forms.CharField(label='Region de Residencia', required=True)
 
 def base(request):
     return render(request, 'base.html')
@@ -27,7 +37,37 @@ def register(request):
             request, 'register.html',
             {"form": UserCreationForm}
         )
-
+class ProfileView(TemplateView):
+    template_name = 'trainerprofile.html'
+    def get(self,request, *args, **kwargs):
+        profile = models.Trainer.objects.filter(username=request.user.username)
+        if profile.count() == 1:
+            profile = profile[0]
+            data = {'profile' : profile}
+            profile.my_gym.pk
+        else:
+            profile = None
+            data = {'form' : MyTrainerForm}
+        return render(request, 'trainerprofile.html', data)
+    def post(self,request):
+        if 'add' in request.POST:
+            t = models.Trainer.objects.filter(id=request.POST['trainer_id'])
+            boss = models.Trainer.objects.filter(username=request.user.username)[0]
+            if t.count():
+                temp=t[0]
+                temp.gym = boss.my_gym
+                temp.save()
+            return render(request, 'trainerprofile.html')
+        citizen = MyTrainerForm(request.POST)
+        if citizen.is_valid():
+            born_region = models.Region.objects.filter(code=citizen.cleaned_data['born_region'])[0]
+            live_region = models.Region.objects.filter(code=citizen.cleaned_data['live_region'])[0]
+            temp = models.Citizen(id=citizen.cleaned_data['id'], name=citizen.cleaned_data['name'], sex=citizen.cleaned_data['sex'], age=citizen.cleaned_data['age'], live_region=live_region, born_region=born_region)
+            temp.save()
+            models.Trainer.objects.create(citizen=temp, username=request.user.username)
+        else: render(request, 'trainerprofile.html', {'form':MyTrainerForm})
+        return render(request, 'trainerprofile.html')
+        
 class TrainersView(TemplateView):
     template_name = 'trainers.html'
     def get(self,request, *args, **kwargs):
@@ -37,12 +77,12 @@ class TrainersView(TemplateView):
             button = 'trainers_query' 
             id = request.POST['trainer_id']
             name = request.POST['trainer_name']
-            query = models.Trainer.objects.filter(id__startswith=id, citizen__name__startswith=name)
+            query = models.Trainer.objects.filter(citizen__pk__startswith=id, citizen__name__startswith=name)
         elif 'specie_search' in request.POST:
             button = 'specie_search'
             id = request.POST['specie_trainer_id']
             specie = request.POST['specie']
-            query = models.Captured_Pokemon.objects.filter(trainer__id=id, pokemon__specie__name=specie)
+            query = models.Captured_Pokemon.objects.filter(trainer__citizen__pk=id, pokemon__specie__name=specie)
             
             
         return render(request, 'trainers.html',{'data':query, 'button': button})
@@ -87,7 +127,7 @@ class DuelView(TemplateView):
         winner = request.POST['winner']
         losser = request.POST['losser']
 
-        query = models.Duel.objects.filter(id__startswith=id, settlemen__id__startswith=settlemen_id, trainer_win__pk__startswith=winner, trainer_loss__pk__startswith=losser)
+        query = models.Duel.objects.filter(id__startswith=id, settlemen__id__startswith=settlemen_id, trainer_win__citizen__pk__startswith=winner, trainer_loss__citizen__pk__startswith=losser)
         return render(request, 'duel.html',{'data':query})
 
 class SpecieView(TemplateView):
